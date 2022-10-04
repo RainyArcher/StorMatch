@@ -3,10 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StorMatch.Pages.ConditionsPage"
              Title="ConditionsPage">
-    <VerticalStackLayout>
+    <VerticalStackLayout Spacing="40">
         <Label 
-            Text="Conditions Page"
+            Text="Rainfall Page"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center"
+            HeightRequest="200"
+            WidthRequest="350"
+            BackgroundColor="White"/>
+        <Label 
+            Text="Rainfall Page"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            HeightRequest="75"
+            WidthRequest="350"
+            BackgroundColor="White"/>
+        <Label 
+            Text="Rainfall Page"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            HeightRequest="75"
+            WidthRequest="350"
+            BackgroundColor="White"/>
+        <Label 
+            Text="Rainfall Page"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            HeightRequest="75"
+            WidthRequest="350"
+            BackgroundColor="White"/>
     </VerticalStackLayout>
 </ContentPage>
