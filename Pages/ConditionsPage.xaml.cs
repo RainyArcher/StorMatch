@@ -1,9 +1,12 @@
+using StorMatch.Views;
+
 namespace StorMatch.Pages;
 
 public partial class ConditionsPage : ContentPage
 {
-	public ConditionsPage()
+	public ConditionsPage(ConditionsViewModel vm)
 	{
 		InitializeComponent();
+		BindingContext = new ConditionsViewModel();
 	}
 }

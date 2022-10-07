@@ -2,35 +2,44 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StorMatch.Pages.ConditionsPage"
-             Title="ConditionsPage">
-    <VerticalStackLayout Spacing="40">
-        <Label 
-            Text="Rainfall Page"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center"
-            HeightRequest="200"
-            WidthRequest="350"
-            BackgroundColor="White"/>
-        <Label 
-            Text="Rainfall Page"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center"
-            HeightRequest="75"
-            WidthRequest="350"
-            BackgroundColor="White"/>
-        <Label 
-            Text="Rainfall Page"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center"
-            HeightRequest="75"
-            WidthRequest="350"
-            BackgroundColor="White"/>
-        <Label 
-            Text="Rainfall Page"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center"
-            HeightRequest="75"
-            WidthRequest="350"
-            BackgroundColor="White"/>
-    </VerticalStackLayout>
+             xmlns:viewmodel="clr-namespace:StorMatch.Views"
+             x:DataType="viewmodel:ConditionsViewModel"
+             Title="Weather Conditions">
+    <StackLayout Padding="100" HeightRequest="200">
+        <ListView ItemsSource="{Binding ConditionsList}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="45" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60" />
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="50"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0"
+                                   Source="{Binding Image}"
+                                   HeightRequest="45"
+                                   WidthRequest="45"></Image>
+                            <Label Grid.Column="1"
+                                   Text="{Binding Name}"
+                                   FontSize="24"
+                                   Margin="20, 0, 0, 0"/>
+                            <Label Grid.Column="2"
+                                   Text="{Binding TemperatureValue}"
+                                   HorizontalTextAlignment="End"
+                                   FontSize="40"
+                                   FontAttributes="Bold"></Label>
+                            <Label Grid.Column ="3"
+                                   Text="°C"
+                                   FontSize="40"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
 </ContentPage>
