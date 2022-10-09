@@ -17,6 +17,7 @@ public static class MauiProgram
 			});
 		builder.Services.AddSingleton<ConditionsPage>();
 		builder.Services.AddSingleton<ConditionsViewModel>();
-		return builder.Build();
+        builder.Services.AddScoped<ConditionsViewModel>();
+        return builder.Build();
 	}
 }

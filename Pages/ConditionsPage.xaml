@@ -41,5 +41,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button BackgroundColor="White"
+                Text="Update"
+                Command="{Binding WeatherUpdateButtonClickedCommand}"></Button>
     </StackLayout>
 </ContentPage>
