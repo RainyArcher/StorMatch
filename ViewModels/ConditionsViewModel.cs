@@ -40,7 +40,20 @@ public partial class ConditionsViewModel : ObservableObject
         var item = conditionsList.FirstOrDefault(i => i.Name == "Yandex");
         if (item != null)
         {
-            item.TemperatureValue = await GetYTemperature();
+            NetworkAccess accessType = Connectivity.Current.NetworkAccess;
+
+            if (accessType == NetworkAccess.Internet)
+            {
+                item.TemperatureValue = await GetYTemperature();
+            }
+            else
+            {
+                bool answer = await Shell.Current.DisplayAlert("Uh-oh, no internet", "Would you like to retry?", "Yes", "Cancel", FlowDirection.LeftToRight);
+                if (answer)
+                {
+                    await OnWeatherUpdateButtonClicked();
+                }
+            }
         }
     }
 
