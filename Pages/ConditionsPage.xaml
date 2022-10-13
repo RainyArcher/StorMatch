@@ -5,12 +5,12 @@
              xmlns:viewmodel="clr-namespace:StorMatch.Views"
              x:DataType="viewmodel:ConditionsViewModel"
              Title="Weather Conditions">
-    <StackLayout Padding="100" HeightRequest="200">
+    <StackLayout HeightRequest="300" >
         <ListView ItemsSource="{Binding ConditionsList}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Grid>
+                        <Grid BackgroundColor="Gray">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="45" />
                             </Grid.RowDefinitions>

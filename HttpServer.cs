@@ -14,11 +14,15 @@ public class HttpServer
             HttpRequestMessage request = new HttpRequestMessage();
             request.RequestUri = new Uri(url);
             request.Method = HttpMethod.Get;
-            request.Headers.Add(key, value);
+            if (!string.IsNullOrEmpty(key) && !string.IsNullOrEmpty(value))
+            {
+                request.Headers.Add(key, value);
+            }
             var response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 data = await response.Content.ReadFromJsonAsync<Dictionary<string, object>>();
+                System.Diagnostics.Debug.WriteLine("Succesful response");
             }
         }
         catch (Exception e)
