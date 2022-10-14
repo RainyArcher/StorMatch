@@ -15,7 +15,7 @@
 		<ApplicationTitle>StorMatch</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.stormatch</ApplicationId>
+		<ApplicationId>com.tvortex.stormatch</ApplicationId>
 		<ApplicationIdGuid>d93a56f2-3c84-4bee-9980-91633ad24917</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -32,7 +32,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\icon.png" BaseSize="64,64"/>
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />

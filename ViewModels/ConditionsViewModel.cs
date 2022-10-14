@@ -40,35 +40,31 @@ public partial class ConditionsViewModel : ObservableObject
     int temperatureValue;
 
     [RelayCommand]
-    public async Task OnWeatherUpdateButtonClicked()
+    public async Task OnWeatherUpdateButtonClicked(string name)
     {
-        foreach (var item in ConditionsList)
-        {
-            if (item != null)
+        var wc = conditionsList.FirstOrDefault(i => i.Name == name);
+        if (wc != null){
+            NetworkAccess accessType = Connectivity.Current.NetworkAccess;
+            if (accessType == NetworkAccess.Internet)
             {
-                NetworkAccess accessType = Connectivity.Current.NetworkAccess;
-
-                if (accessType == NetworkAccess.Internet)
+                if (wc.Name == "Yandex")
                 {
-                    if (item.Name == "Yandex")
-                    {
-                        item.TemperatureValue = await GetYTemperature();
-                    }
-                    else if (item.Name == "OpenWeather")
-                    {
-                        item.TemperatureValue = await GetOWTemperature();
-                    }
-                    else if (item.Name == "WeatherBit")
-                    {
-                        item.TemperatureValue = await GetWBTemperature();
-                    }
+                    wc.TemperatureValue = await GetYTemperature();
+                }
+                else if (wc.Name == "OpenWeather")
+                {
+                    wc.TemperatureValue = await GetOWTemperature();
+                }
+                else if (wc.Name == "WeatherBit")
+                {
+                    wc.TemperatureValue = await GetWBTemperature();
                 }
                 else
                 {
                     bool answer = await Shell.Current.DisplayAlert("Uh-oh, no internet", "Would you like to retry?", "Yes", "Cancel", FlowDirection.LeftToRight);
                     if (answer)
                     {
-                        await OnWeatherUpdateButtonClicked();
+                        await OnWeatherUpdateButtonClicked(name);
                     }
                 }
             }

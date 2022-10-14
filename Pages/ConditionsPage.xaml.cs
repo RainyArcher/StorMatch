@@ -7,6 +7,6 @@ public partial class ConditionsPage : ContentPage
 	public ConditionsPage(ConditionsViewModel vm)
 	{
 		InitializeComponent();
-		BindingContext = new ConditionsViewModel();
+		BindingContext = vm;
 	}
 }
