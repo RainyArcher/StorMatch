@@ -11,17 +11,19 @@ public partial class ConditionsViewModel : ObservableObject
     private const string lat = ""; // Latitude
     private const string lon = ""; // Longitude
     private const string yandexAPIUri = $"https://api.weather.yandex.ru/v2/forecast/?lat={lat}&lon={lon}&lang=ru_RU";
-    private const string yandexAPIKey = "X-Yandex-API-Key";
-    private const string yandexAPIValue = "";
+    private static Dictionary<string, string> yandexAPIKey = new Dictionary<string, string>() { { "X-Yandex-API-Key", "" } };
     private const string openWeatherAPIUri = $"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric&appid={openWeatherAPIKey}";
     private const string openWeatherAPIKey = "";
+    private const string weatherBitUri = $"https://api.weatherbit.io/v2.0/current?lat={lat}&lon={lon}&key={weatherBitAPIKey}";
+    private const string weatherBitAPIKey = "";
 
     public ConditionsViewModel()
     {
         conditionsList = new ObservableCollection<WeatherConditions>
         {
             new WeatherConditions { Name = "Yandex", Image = "yandex.png", TemperatureValue = 0},
-            new WeatherConditions { Name = "OpenWeather", Image = "openweather.png", TemperatureValue = 0 }
+            new WeatherConditions { Name = "OpenWeather", Image = "openweather.png", TemperatureValue = 0 },
+            new WeatherConditions { Name = "WeatherBit", Image = "weatherbit.png", TemperatureValue = 0 },
         };
     }
 
@@ -56,6 +58,10 @@ public partial class ConditionsViewModel : ObservableObject
                     {
                         item.TemperatureValue = await GetOWTemperature();
                     }
+                    else if (item.Name == "WeatherBit")
+                    {
+                        item.TemperatureValue = await GetWBTemperature();
+                    }
                 }
                 else
                 {
@@ -71,20 +77,53 @@ public partial class ConditionsViewModel : ObservableObject
 
     // TODO 
     // Combine all the GetTemperature() methods into one class with a universal functionality for each service
+    // make every method double
     public static async Task<int> GetYTemperature()
     {
-        HttpServer server = new HttpServer();
-        Dictionary<string, object> response = await server.Get(yandexAPIUri, yandexAPIKey, yandexAPIValue);
-        var day = JsonConvert.DeserializeObject<Dictionary<string, object>>(response["fact"].ToString());
-        string temperature = day["temp"].ToString();
-        return Convert.ToInt32(temperature);
+        int temperature = 0;
+        try
+        { 
+            HttpServer server = new HttpServer();
+            Dictionary<string, object> response = await server.Get(yandexAPIUri, yandexAPIKey);
+            var day = JsonConvert.DeserializeObject<Dictionary<string, object>>(response["fact"].ToString());
+            temperature = Convert.ToInt32(day["temp"].ToString());
+        }
+        catch (Exception e)
+        {
+            System.Diagnostics.Debug.WriteLine($"Something went wrong, caught exception {e}");
+        }
+        return temperature;
     }
     public static async Task<int> GetOWTemperature()
     {
-        HttpServer server = new HttpServer();
-        Dictionary<string, object> response = await server.Get(openWeatherAPIUri);
-        var day = JsonConvert.DeserializeObject<Dictionary<string, float>>(response["main"].ToString());
-        string temperature = ((int)Math.Round(day["temp"], 0)).ToString();
-        return Convert.ToInt32(temperature);
+        int temperature = 0;
+        try
+        {
+            HttpServer server = new HttpServer();
+            Dictionary<string, object> response = await server.Get(openWeatherAPIUri);
+            var day = JsonConvert.DeserializeObject<Dictionary<string, float>>(response["main"].ToString());
+            temperature = (int)Math.Round(day["temp"], 0);
+        }
+        catch (Exception e)
+        {
+            System.Diagnostics.Debug.WriteLine($"Something went wrong, caught exception {e}");
+        }
+        return temperature;
+    }
+    public static async Task<int> GetWBTemperature()
+    {
+        int temperature = 0;
+        try
+        {
+            HttpServer server = new HttpServer();
+            Dictionary<string, object> response = await server.Get(weatherBitUri);
+            var day = JsonConvert.DeserializeObject<Dictionary<string, object>>(response["data"].ToString()[1..^1]);
+            temperature = (int)Math.Round(float.Parse(day["temp"].ToString()), 0);
+        }
+        catch (Exception e)
+        {
+            System.Diagnostics.Debug.WriteLine($"Something went wrong, caught exception {e}");
+        }
+        return temperature;
     }
 }
