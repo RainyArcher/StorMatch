@@ -23,7 +23,7 @@ public partial class ConditionsViewModel : ObservableObject
         {
             new WeatherConditions { Name = "Yandex", Image = "yandex.png", TemperatureValue = 0},
             new WeatherConditions { Name = "OpenWeather", Image = "openweather.png", TemperatureValue = 0 },
-            new WeatherConditions { Name = "WeatherBit", Image = "weatherbit.png", TemperatureValue = 0 },
+            new WeatherConditions { Name = "WeatherBit", Image = "weatherbit.png", TemperatureValue = 0 }
         };
     }
 
@@ -59,13 +59,13 @@ public partial class ConditionsViewModel : ObservableObject
                 {
                     wc.TemperatureValue = await GetWBTemperature();
                 }
-                else
+            }
+            else
+            {
+                bool answer = await Shell.Current.DisplayAlert("Uh-oh, no internet", "Would you like to retry?", "Yes", "Cancel", FlowDirection.LeftToRight);
+                if (answer)
                 {
-                    bool answer = await Shell.Current.DisplayAlert("Uh-oh, no internet", "Would you like to retry?", "Yes", "Cancel", FlowDirection.LeftToRight);
-                    if (answer)
-                    {
-                        await OnWeatherUpdateButtonClicked(name);
-                    }
+                    await OnWeatherUpdateButtonClicked(name);
                 }
             }
         }

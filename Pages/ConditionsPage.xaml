@@ -5,8 +5,8 @@
              xmlns:viewmodel="clr-namespace:StorMatch.Views"
              x:DataType="viewmodel:ConditionsViewModel"
              Title="Weather Conditions">
-    <StackLayout HeightRequest="200" HorizontalOptions="Center">
-        <CollectionView ItemsSource="{Binding ConditionsList}" SelectionMode="None">
+    <StackLayout HeightRequest="300" HorizontalOptions="Center">
+        <CollectionView ItemsSource="{Binding ConditionsList}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="20" BackgroundColor="LightGray">
@@ -41,14 +41,13 @@
                                    VerticalOptions="Center"
                                    HorizontalOptions="Center"
                                        FontSize="14"/>
-
                         <Button Grid.Column="4" Margin="20, 10, 10, 0"
                                 Text="Update"
                                 WidthRequest="80"
                                 HeightRequest="40"
                                 VerticalOptions="Center"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ConditionsViewModel}}, Path=WeatherUpdateButtonClickedCommand}"
-                                CommandParameter="{Binding Name}"></Button>
+                                CommandParameter="{Binding Name}"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
