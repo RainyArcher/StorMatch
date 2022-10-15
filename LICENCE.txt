@@ -177,4 +177,4 @@
       of your accepting any such warranty or additional liability.
 
    END OF TERMS AND CONDITIONS
-   Copyright [2022] Shatavol Denis Vladimirovich
+   Copyright 2022 Shatavol Denis Vladimirovich
