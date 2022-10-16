@@ -1,3 +1,4 @@
 Microsoft FluentEmoji for tab icons - https://github.com/microsoft/fluentui-emoji
 Yandex Weather - https://yandex.com/weather
 OpenWeather - https://openweathermap.org
+WeatherBit - https://www.weatherbit.io/
