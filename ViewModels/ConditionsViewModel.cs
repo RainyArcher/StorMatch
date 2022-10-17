@@ -25,6 +25,7 @@ public partial class ConditionsViewModel : ObservableObject
             new WeatherConditions { Name = "OpenWeather", Image = "openweather.png", TemperatureValue = 0 },
             new WeatherConditions { Name = "WeatherBit", Image = "weatherbit.png", TemperatureValue = 0 }
         };
+        averageTemperature = 0;
     }
 
     [ObservableProperty]
@@ -38,6 +39,9 @@ public partial class ConditionsViewModel : ObservableObject
 
     [ObservableProperty]
     int temperatureValue;
+
+    [ObservableProperty]
+    public int averageTemperature;
 
     [RelayCommand]
     public async Task OnWeatherUpdateButtonClicked(string name)
@@ -59,6 +63,7 @@ public partial class ConditionsViewModel : ObservableObject
                 {
                     wc.TemperatureValue = await GetWBTemperature();
                 }
+                AverageTemperature = changeAverageTemperature();
             }
             else
             {
@@ -71,9 +76,6 @@ public partial class ConditionsViewModel : ObservableObject
         }
     }
 
-    // TODO 
-    // Combine all the GetTemperature() methods into one class with a universal functionality for each service
-    // make every method double
     public static async Task<int> GetYTemperature()
     {
         int temperature = 0;
@@ -121,5 +123,26 @@ public partial class ConditionsViewModel : ObservableObject
             System.Diagnostics.Debug.WriteLine($"Something went wrong, caught exception {e}");
         }
         return temperature;
+    }
+    public int changeAverageTemperature()
+    {
+        int summOfTemperateitems = 0;
+        int validTemperatureItemsAmount = 0;
+        foreach (WeatherConditions item in ConditionsList)
+        {
+            if (item.TemperatureValue != 0)
+            {
+                summOfTemperateitems += item.TemperatureValue;
+                validTemperatureItemsAmount += 1;
+            }
+        }
+        if (validTemperatureItemsAmount > 0)
+        {
+            return (int)Math.Ceiling((double)summOfTemperateitems / validTemperatureItemsAmount);
+        }
+        else
+        {
+            return 0;
+        }
     }
 }
