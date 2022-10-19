@@ -12,13 +12,13 @@
             Margin="10, 20, 10, 0"
             HeightRequest="250"
             Visual="Material">
-            <Grid Margin="-20, 0, 0, 0" WidthRequest="350" HorizontalOptions="Center" VerticalOptions="Center">
+            <Grid Margin="-40, 0, 0, 0" WidthRequest="350" HorizontalOptions="Center" VerticalOptions="Center">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="200" />
                     <ColumnDefinition Width="150" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Text="{Binding AverageTemperature, FallbackValue=0}" FontSize="100" HorizontalOptions="End" TextColor="LightGrey" FontAttributes="Bold"/>
-                <Label Grid.Column="1" Text="°C" FontSize="100" TextColor="LightGrey" FontAttributes="Bold"/>
+                <Label Grid.Column="0" Text="{Binding AverageTemperature, FallbackValue=0}" FontSize="70" HorizontalOptions="End" TextColor="LightGrey" FontAttributes="Bold"/>
+                <Label Grid.Column="1" Text="°C" FontSize="70" TextColor="LightGrey" FontAttributes="Bold" HorizontalOptions="Start"/>
             </Grid>
             
         </Frame>
@@ -34,42 +34,42 @@
                             Visual="Material">
                         <Grid Padding="20">
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="20" />
                                 <RowDefinition Height="80" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="50" />
-                                <ColumnDefinition Width="40" />
+                                <ColumnDefinition Width="100" />
                                 <ColumnDefinition Width="50"/>
                                 <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="100"/>
                             </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0"
+                            <Image Grid.Column="0" Grid.Row="1"
                                        Source="{Binding Image}"
                                        HeightRequest="50"
                                        WidthRequest="50"
                                    VerticalOptions="Center"
-                                   Margin="0, -20, 0, 0">
+                                   Margin="0, -30, 0, 0">
                             </Image>
-                            <Label Grid.Column="1"
+                            <Label Grid.Column="1" Grid.Row="1"
                                        Text="{Binding TemperatureValue}"
-                                       HorizontalOptions="Center"
+                                       HorizontalOptions="End"
                                        FontSize="40"
                                        FontAttributes="Bold"></Label>
-                            <Label Grid.Column ="2"
+                            <Label Grid.Column ="2" Grid.Row="1"
                                        Text="°C"
                                    HorizontalTextAlignment="Start"
                                        FontSize="40"/>
-                            <Label Grid.Column="3"
+                            <Label Grid.ColumnSpan="4" Grid.Row="0"
                                        Text="{Binding Name}"
                                    VerticalOptions="Center"
                                    HorizontalOptions="Center"
                                        Margin="0, -20, 0, 0"
                                        FontSize="12"/>
-                            <Button Grid.Column="4" Margin="-20, -20, 0, 0"
+                            <Button Grid.Column="4" Grid.Row="1" Margin="40, -20, 0, 0"
                                 Text="Update"
                                 WidthRequest="80"
                                 HeightRequest="40"
-                                VerticalOptions="Center"
+                                HorizontalOptions="Center"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ConditionsViewModel}}, Path=WeatherUpdateButtonClickedCommand}"
                                 CommandParameter="{Binding Name}"/>
                         </Grid>
