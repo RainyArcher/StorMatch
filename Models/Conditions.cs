@@ -6,9 +6,9 @@ namespace StorMatch.Models
     {
         private string name;
         private string image;
-        private int temperatureValue;
+        private string temperatureContent;
         public string Name { get => name; set => SetProperty(ref name, value); }
         public string Image { get => image; set => SetProperty(ref image, value); }
-        public int TemperatureValue { get => temperatureValue; set => SetProperty(ref temperatureValue, value); }
+        public string TemperatureContent { get => temperatureContent; set => SetProperty(ref temperatureContent, value); }
     }
 }

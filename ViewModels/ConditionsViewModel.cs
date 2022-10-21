@@ -21,9 +21,9 @@ public partial class ConditionsViewModel : ObservableObject
     {
         conditionsList = new ObservableCollection<WeatherConditions>
         {
-            new WeatherConditions { Name = "Yandex", Image = "yandex.png", TemperatureValue = 0},
-            new WeatherConditions { Name = "OpenWeather", Image = "openweather.png", TemperatureValue = 0 },
-            new WeatherConditions { Name = "WeatherBit", Image = "weatherbit.png", TemperatureValue = 0 }
+            new WeatherConditions { Name = "Yandex", Image = "yandex.png", TemperatureContent = "n"},
+            new WeatherConditions { Name = "OpenWeather", Image = "openweather.png", TemperatureContent = "n" },
+            new WeatherConditions { Name = "WeatherBit", Image = "weatherbit.png", TemperatureContent = "n" }
         };
         averageTemperature = 0;
     }
@@ -38,10 +38,10 @@ public partial class ConditionsViewModel : ObservableObject
     string name;
 
     [ObservableProperty]
-    int temperatureValue;
+    string temperatureContent;
 
     [ObservableProperty]
-    public int averageTemperature;
+    int averageTemperature;
 
     [RelayCommand]
     public async Task OnWeatherUpdateButtonClicked(string name)
@@ -53,15 +53,15 @@ public partial class ConditionsViewModel : ObservableObject
             {
                 if (wc.Name == "Yandex")
                 {
-                    wc.TemperatureValue = await GetYTemperature();
+                    wc.TemperatureContent = await GetYTemperature();
                 }
                 else if (wc.Name == "OpenWeather")
                 {
-                    wc.TemperatureValue = await GetOWTemperature();
+                    wc.TemperatureContent = await GetOWTemperature();
                 }
                 else if (wc.Name == "WeatherBit")
                 {
-                    wc.TemperatureValue = await GetWBTemperature();
+                    wc.TemperatureContent = await GetWBTemperature();
                 }
                 AverageTemperature = changeAverageTemperature();
             }
@@ -76,15 +76,15 @@ public partial class ConditionsViewModel : ObservableObject
         }
     }
 
-    public static async Task<int> GetYTemperature()
+    public static async Task<string> GetYTemperature()
     {
-        int temperature = 0;
+        string temperature = "n";
         try
         { 
             HttpServer server = new HttpServer();
             Dictionary<string, object> response = await server.Get(yandexAPIUri, yandexAPIKey);
             var day = JsonConvert.DeserializeObject<Dictionary<string, object>>(response["fact"].ToString());
-            temperature = Convert.ToInt32(day["temp"].ToString());
+            temperature = day["temp"].ToString();
         }
         catch (Exception e)
         {
@@ -92,15 +92,15 @@ public partial class ConditionsViewModel : ObservableObject
         }
         return temperature;
     }
-    public static async Task<int> GetOWTemperature()
+    public static async Task<string> GetOWTemperature()
     {
-        int temperature = 0;
+        string temperature = "n";
         try
         {
             HttpServer server = new HttpServer();
             Dictionary<string, object> response = await server.Get(openWeatherAPIUri);
             var day = JsonConvert.DeserializeObject<Dictionary<string, float>>(response["main"].ToString());
-            temperature = (int)Math.Round(day["temp"], 0);
+            temperature = (Math.Round(day["temp"], 0)).ToString();
         }
         catch (Exception e)
         {
@@ -108,15 +108,15 @@ public partial class ConditionsViewModel : ObservableObject
         }
         return temperature;
     }
-    public static async Task<int> GetWBTemperature()
+    public static async Task<string> GetWBTemperature()
     {
-        int temperature = 0;
+        string temperature = "n";
         try
         {
             HttpServer server = new HttpServer();
             Dictionary<string, object> response = await server.Get(weatherBitUri);
             var day = JsonConvert.DeserializeObject<Dictionary<string, object>>(response["data"].ToString()[1..^1]);
-            temperature = (int)Math.Round(float.Parse(day["temp"].ToString()), 0);
+            temperature = (Math.Round(float.Parse(day["temp"].ToString()), 0)).ToString();
         }
         catch (Exception e)
         {
@@ -130,15 +130,15 @@ public partial class ConditionsViewModel : ObservableObject
         int validTemperatureItemsAmount = 0;
         foreach (WeatherConditions item in ConditionsList)
         {
-            if (item.TemperatureValue != 0)
+            if (item.TemperatureContent != "n")
             {
-                summOfTemperateitems += item.TemperatureValue;
+                summOfTemperateitems += Convert.ToInt32(item.TemperatureContent);
                 validTemperatureItemsAmount += 1;
             }
         }
         if (validTemperatureItemsAmount > 0)
         {
-            return (int)Math.Ceiling((double)summOfTemperateitems / validTemperatureItemsAmount);
+            return (int)Math.Round((double)summOfTemperateitems / validTemperatureItemsAmount);
         }
         else
         {
