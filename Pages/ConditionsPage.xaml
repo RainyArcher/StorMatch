@@ -5,7 +5,7 @@
              xmlns:viewmodel="clr-namespace:StorMatch.Views"
              x:DataType="viewmodel:ConditionsViewModel" >
     <RefreshView IsRefreshing="{Binding IsRefreshing}"
-             Command="{Binding RefreshTempreatureValuesCommand}" Margin="-20, 0, 0, 0">
+             Command="{Binding RefreshTempreatureValuesCommand}" RefreshColor="{StaticResource Primary}" Margin="-20, 0, 0, 0">
     <StackLayout WidthRequest="400" HorizontalOptions="Center" Spacing="60">
         <Frame
             HorizontalOptions="Center"

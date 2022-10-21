@@ -9,9 +9,9 @@
         <Tab Title="Conditions" Icon="sun.png">
             <ShellContent ContentTemplate="{DataTemplate local:ConditionsPage}" />
         </Tab>
-        <Tab Title="Rainfall" Icon="rain.png">
+        <!--<Tab Title="Rainfall" Icon="rain.png">
             <ShellContent ContentTemplate="{DataTemplate local:RainfallPage}"/>
-        </Tab>
+        </Tab>-->
     </TabBar>
 
 </Shell>
