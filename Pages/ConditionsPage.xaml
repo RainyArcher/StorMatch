@@ -4,6 +4,8 @@
              x:Class="StorMatch.Pages.ConditionsPage"
              xmlns:viewmodel="clr-namespace:StorMatch.Views"
              x:DataType="viewmodel:ConditionsViewModel" >
+    <RefreshView IsRefreshing="{Binding IsRefreshing}"
+             Command="{Binding RefreshTempreatureValuesCommand}" Margin="-20, 0, 0, 0">
     <StackLayout WidthRequest="400" HorizontalOptions="Center" Spacing="60">
         <Frame
             HorizontalOptions="Center"
@@ -20,63 +22,64 @@
                 <Label Grid.Column="0" Text="{Binding AverageTemperature}" FontSize="70" Margin="{OnPlatform WinUI='0, 75, 0, 0'}" HorizontalOptions="End" TextColor="LightGrey" FontAttributes="Bold"/>
                 <Label Grid.Column="1" Text="°C" FontSize="70" TextColor="LightGrey" Margin="{OnPlatform WinUI='0, 75, 0, 0'}" FontAttributes="Bold" HorizontalOptions="Start"/>
             </Grid>
-            
+
         </Frame>
-        <CollectionView ItemsSource="{Binding ConditionsList}" HeightRequest="400" SelectionMode="None" >
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame
+            <CollectionView ItemsSource="{Binding ConditionsList}" HeightRequest="400" SelectionMode="None" >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame
                             HorizontalOptions="Center"
                             Padding="0"
                             BackgroundColor="Gray" CornerRadius="25"
                             Margin="20, 0, 20, 0"
                             HeightRequest="100" WidthRequest="{OnPlatform WinUI='340', Android='350'}"
                             Visual="Material">
-                        <!--WidthRequest=400 for android-->
-                        <Grid Padding="20">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="20" />
-                                <RowDefinition Height="80" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="50"/>
-                                <ColumnDefinition Width="100"/>
-                            </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" Grid.Row="1"
+                            <!--WidthRequest=400 for android-->
+                            <Grid Padding="20">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20" />
+                                    <RowDefinition Height="80" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Grid.Row="1"
                                        Source="{Binding Image}"
                                        HeightRequest="50"
                                        WidthRequest="50"
                                    VerticalOptions="Center"
                                    Margin="0, -30, 0, 0">
-                            </Image>
-                            <Label Grid.Column="1" Grid.Row="1"
+                                </Image>
+                                <Label Grid.Column="1" Grid.Row="1"
                                        Text="{Binding TemperatureContent}"
                                        HorizontalOptions="End"
                                        FontSize="40"
                                        FontAttributes="Bold"></Label>
-                            <Label Grid.Column ="2" Grid.Row="1"
+                                <Label Grid.Column ="2" Grid.Row="1"
                                        Text="°C"
                                    HorizontalTextAlignment="Start"
                                        FontSize="40"/>
-                            <Label Grid.ColumnSpan="4" Grid.Row="0"
+                                <Label Grid.ColumnSpan="4" Grid.Row="0"
                                        Text="{Binding Name}"
                                    VerticalOptions="Center"
                                    HorizontalOptions="Center"
                                        Margin="0, -20, 0, 0"
                                        FontSize="12"/>
-                            <Button Grid.Column="4" Grid.Row="1" Margin="40, -20, 0, 0"
+                                <Button Grid.Column="4" Grid.Row="1" Margin="40, -20, 0, 0"
                                 Text="Update"
                                 WidthRequest="80"
                                 HeightRequest="40"
                                 HorizontalOptions="Center"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ConditionsViewModel}}, Path=WeatherUpdateButtonClickedCommand}"
                                 CommandParameter="{Binding Name}"/>
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </StackLayout>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </RefreshView>
 </ContentPage>

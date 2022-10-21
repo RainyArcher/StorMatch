@@ -43,6 +43,9 @@ public partial class ConditionsViewModel : ObservableObject
     [ObservableProperty]
     int averageTemperature;
 
+    [ObservableProperty]
+    bool isRefreshing = false;
+
     [RelayCommand]
     public async Task OnWeatherUpdateButtonClicked(string name)
     {
@@ -51,18 +54,7 @@ public partial class ConditionsViewModel : ObservableObject
             NetworkAccess accessType = Connectivity.Current.NetworkAccess;
             if (accessType == NetworkAccess.Internet)
             {
-                if (wc.Name == "Yandex")
-                {
-                    wc.TemperatureContent = await GetYTemperature();
-                }
-                else if (wc.Name == "OpenWeather")
-                {
-                    wc.TemperatureContent = await GetOWTemperature();
-                }
-                else if (wc.Name == "WeatherBit")
-                {
-                    wc.TemperatureContent = await GetWBTemperature();
-                }
+                wc.TemperatureContent = await GetTemperatureByProvider(wc.Name);
                 AverageTemperature = changeAverageTemperature();
             }
             else
@@ -76,6 +68,52 @@ public partial class ConditionsViewModel : ObservableObject
         }
     }
 
+    [RelayCommand]
+    public async Task RefreshTempreatureValues()
+    {
+        NetworkAccess accessType = Connectivity.Current.NetworkAccess;
+        if (accessType == NetworkAccess.Internet)
+        {
+            System.Diagnostics.Debug.WriteLine("Refreshing");
+            IsRefreshing = true;
+            foreach (WeatherConditions wc in ConditionsList)
+            {
+                wc.TemperatureContent = await GetTemperatureByProvider(wc.Name);
+            }
+            AverageTemperature = changeAverageTemperature();
+            IsRefreshing = false;
+        }
+        else
+        {
+            IsRefreshing = false;
+            bool answer = await Shell.Current.DisplayAlert("Uh-oh, no internet", "Would you like to retry?", "Yes", "Cancel", FlowDirection.LeftToRight);
+            if (answer)
+            {
+                await RefreshTempreatureValues();
+            }
+        }
+    }
+
+    public static async Task<string> GetTemperatureByProvider(string name)
+    {
+        string temperatureContent = null;
+        if (name != null)
+        {
+            if (name == "Yandex")
+            {
+                temperatureContent = await GetYTemperature();
+                }
+            else if (name == "OpenWeather")
+            {
+                temperatureContent = await GetOWTemperature();
+            }
+            else if (name == "WeatherBit")
+            {
+                temperatureContent = await GetWBTemperature();
+            }
+        }
+        return temperatureContent;
+    }
     public static async Task<string> GetYTemperature()
     {
         string temperature = "n";
