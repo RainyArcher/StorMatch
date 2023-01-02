@@ -10,7 +10,7 @@ public partial class ConditionsViewModel : ObservableObject
 {
     private const string lat = ""; // Latitude
     private const string lon = ""; // Longitude
-    private const string yandexAPIUri = $"https://api.weather.yandex.ru/v2/forecast/?lat={lat}&lon={lon}&lang=ru_RU";
+    private const string yandexAPIUri = $"https://api.weather.yandex.ru/v2/informers?lat={lat}&lon={lon}&lang=en_US";
     private static Dictionary<string, string> yandexAPIKey = new Dictionary<string, string>() { { "X-Yandex-API-Key", "" } };
     private const string openWeatherAPIUri = $"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric&appid={openWeatherAPIKey}";
     private const string openWeatherAPIKey = "";

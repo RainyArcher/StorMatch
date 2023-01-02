@@ -11,7 +11,7 @@
             HorizontalOptions="Center"
             Padding="0"
             BackgroundColor="#4a4a4c" CornerRadius="25"
-            Margin="{OnPlatform Android='10, 20, 10, 0', WinUI='0, 20, 10, 0'}"
+            Margin="{OnPlatform Android='20, 20, 5, 0', WinUI='0, 20, 0, 0'}"
             HeightRequest="250"
             Visual="Material">
             <Grid Margin="{OnPlatform Android='-40, 0, 0, 0', WinUI='0, 0, 0, 0'}" WidthRequest="{OnPlatform WinUI='380', Android='350'}" HeightRequest="{OnPlatform WinUI='250'}" HorizontalOptions="Center" VerticalOptions="Center">
@@ -31,7 +31,7 @@
                             HorizontalOptions="Center"
                             Padding="0"
                             BackgroundColor="Gray" CornerRadius="25"
-                            Margin="20, 0, 20, 0"
+                            Margin="{OnPlatform Android='40, 0, 20, 0', WinUI='20, 0, 20, 0'}"
                             HeightRequest="100" WidthRequest="{OnPlatform WinUI='340', Android='350'}"
                             Visual="Material">
                             <!--WidthRequest=400 for android-->
